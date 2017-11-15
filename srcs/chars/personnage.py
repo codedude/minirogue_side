@@ -21,26 +21,27 @@ class Personnage:
 		#attributs
 		self.nom = nom
 		self.classe = classe
-		self.caracteristique = Caract(classe)
+		self.carac = Caract(classe)
 		self.inventaire = Inventaire()
 		self.x = 0
 		self.y = 0
 		self.gold = 0
 		self.xp = 0
+		self.lvl = 1
 
 
 	def attaquer(self, ennemi):
-		ennemi.estBlesse(self.caracteristique.AP)
+		ennemi.estBlesse(self.carac.AP)
 		return self.nom + "attaque"+ennemi.nom
 
 	def estBlesse(self, dommages):
-		if (self.caracteristique.armure < dommages):
-			self.caracteristique.hp = self.caracteristique.hp - dommages + self.caracteristique.armure
-			return self.nom+"a perdu " + str(dommages - self.caracteristique.armure) + " HP"
+		if (self.carac.armure < dommages):
+			self.carac.hp = self.carac.hp - dommages + self.carac.armure
+			return self.nom+"a perdu " + str(dommages - self.carac.armure) + " HP"
 		return self.nom+"n'est pas blesse. Il est totalememt protege par son armure."
 
 	def guerir(self, hp):
-		self.caracteristique.hp += hp
+		self.carac.hp += hp
 		return self.nom+" a recupere"+str(hp)+" HP"
 
 	def getGold(self, montant):
@@ -52,10 +53,10 @@ class Personnage:
 		return self.nom+" a depense"+str(montant)+" pieces d'or"
 
 	def utiliser(self, objet):
-		self.caracteristique.hp += objet['hp']
-		self.caracteristique.AP += objet['AP']
-		self.caracteristique.agilite += objet['agilite']
-		self.caracteristique.armure += objet['armure']
+		self.carac.hp += objet['hp']
+		self.carac.AP += objet['AP']
+		self.carac.agilite += objet['agilite']
+		self.carac.armure += objet['armure']
 		texte = self.nom + "gagne "
 		if (objet['hp'] != 0):
 			texte += str(objet['hp']) + 'HP; '
@@ -72,7 +73,7 @@ class Personnage:
 		return self.utiliser(objet)
 
 	# def fuite(self, ennemi):
-	# 	if(self.caracteristique.agilite > ennemi.caracteristique.agilite):
+	# 	if(self.carac.agilite > ennemi.carac.agilite):
 	# 		return True
 
 	# def deplacement(self):
@@ -80,10 +81,10 @@ class Personnage:
 class Caract:
 
 	def __init__(self, classe):
-			self.hp = classe['hp']
-			self.AP = classe['AP']
-			self.agilite = classe['agilite']
-			self.armure = classe['armure']
+		self.hp = classe['hp']
+		self.AP = classe['AP']
+		self.agilite = classe['agilite']
+		self.armure = classe['armure']
 
 
 class Inventaire:
@@ -122,7 +123,7 @@ monstre_base['armure'] = 2
 
 monstre2= {}
 monstre2['classe'] = 'Chevalier noir'
-monstre2['hp'] = 5
+monstre2['hp'] = 7
 monstre2['AP'] = 1
 monstre2['agilite'] = 0
 monstre2['armure'] = 1
@@ -144,7 +145,7 @@ epee['equipe'] = False
 epee['poids'] = 3
 epee['AP'] = 3
 epee['agilite'] = 0
-epee['armure'] =  2 
+epee['armure'] =  2
 
 bouclier = {}
 bouclier['nom'] = 'Bouclier'
@@ -153,7 +154,7 @@ bouclier['equipe'] = False
 bouclier['poids'] = 2
 bouclier['AP'] = 0
 bouclier['agilite'] = 0
-bouclier['armure'] =  2 
+bouclier['armure'] =  2
 
 potion = {}
 potion['nom'] = "Potion de vie"
@@ -168,14 +169,14 @@ potion['hp'] = 4
 if __name__ == '__main__':
 	perso = Personnage('moi', guerrier)
 	monstre = Personnage('lui', monstre_base)
-	print(perso.caracteristique.hp)
-	print(monstre.caracteristique.hp)
+	print(perso.carac.hp)
+	print(monstre.carac.hp)
 	perso.attaquer(monstre)
-	print(perso.caracteristique.hp)
-	print(monstre.caracteristique.hp)
+	print(perso.carac.hp)
+	print(monstre.carac.hp)
 	monstre.prendre(potion)
-	print(perso.caracteristique.hp)
-	print(monstre.caracteristique.hp)
+	print(perso.carac.hp)
+	print(monstre.carac.hp)
 
 	sys.exit()
 
