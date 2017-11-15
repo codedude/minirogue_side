@@ -1,19 +1,19 @@
-#!/usr/bin/env/ python3.4
+#!/usr/bin/env/ python3.5
 #-*- coding: utf-8 -*-
 #
-#Launch the app
 
 try:
     import sys
-    from gui import *
-    from chars import *
+    from .SomeClass.Singleton import Singleton, Unique
 
 except ImportError as e:
     print("Failed to load modules : {0}".format(e))
     sys.exit(2)
 
 def main():
-	pass
+
+    return 0
+
 
 if __name__ == '__main__':
-    sys.exit(main())
+    pass
